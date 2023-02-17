@@ -1,0 +1,9 @@
+VERSION = 1,
+
+mods
+{
+}
+
+maps
+{
+}
