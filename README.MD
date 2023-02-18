@@ -4,7 +4,7 @@ This Dockerfile downloads the Project Zombie dedicated server using SteamCMD. Wi
 
 The ready to use image is available here:
 
-https://hub.docker.com/r/danixu86/project-zomboid-dedicated-server
+https://hub.docker.com/r/lorthe/monga_projectzomboid
 
 ## Environment variables
 
@@ -111,3 +111,5 @@ In the scripts folders there are three scripts:
 * entry.sh: The script used in the image to start the server
 * update_forum.sh: Check the posts in the forum for updates and create a new image if a new version exists. This script was made because looks like the official page doesn't update the version as soon it is out.
 * uodate_web.sh: Check the version in the official page and create a new image if a new version exists
+
+danixu86/project-zomboid-dedicated-server
