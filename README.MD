@@ -1,113 +1,114 @@
-# Project Zomboid dedicated server container
+# Contêiner de servidor dedicado do Projeto Zomboid
 
-This Dockerfile downloads the Project Zombie dedicated server using SteamCMD. Will allow you to deploy with ease a server in Kubernetes, Docker...
+Este Dockerfile baixa o servidor dedicado do Project Zombie usando o SteamCMD. Permitirá implantar com facilidade um servidor em Kubernetes, Docker...
 
-The ready to use image is available here:
+A imagem pronta para usar está disponível aqui:
 
-https://hub.docker.com/r/danixu86/project-zomboid-dedicated-server
+https://hub.docker.com/r/lorthe/monga_projectzomboid
 
-## Environment variables
+## Variáveis ​​ambientais
 
-This dockerfile converts some env variables to arguments in the server command, allowing to configure it. The image supports the following environment variables:
+Este dockerfile converte algumas variáveis env em argumentos no comando do servidor, permitindo configurá-lo. A imagem suporta as seguintes variáveis de ambiente:
 
-`ADMINPASSWORD:` Sets or changes the admin password. Is mandatory at first startup or will fail. I recommend to remove it once the server is started because the server logs every argument in clear text (if doesn't cares, you can leave it).
+`ADMINPASSWORD:` Define ou altera a senha do administrador. É obrigatório na primeira inicialização ou falhará. Eu recomendo removê-lo assim que o servidor for iniciado porque o servidor registra todos os argumentos em texto não criptografado (se não se importar, você pode deixá-lo).
 
-`CACHEDIR:` Set the folder where the data will be stored. By default the server stores the data in the Zomboid folder in home directory (/home/steam/Zomboid). Is recommended to store this data into a persistent volume to keep the server state.
+`CACHEDIR:` Defina a pasta onde os dados serão armazenados. Por padrão, o servidor armazena os dados na pasta Zomboid no diretório inicial (/home/steam/Zomboid). Recomenda-se armazenar esses dados em um volume persistente para manter o estado do servidor.
 
-`DEBUG:` Enable the debug mode in server
+`DEBUG:` Ativa o modo de depuração no servidor
 
-`FORCEUPDATE:` Force a server update on every start. This process can be slow if the image is old.
+`FORCEUPDATE:` Força uma atualização do servidor a cada inicialização. Esse processo pode ser lento se a imagem for antiga.
 
-`IP:` Set the interface IP where the server will listen. By default all the interfaces.
+`IP:` Defina o IP da interface onde o servidor irá escutar. Por padrão, todas as interfaces.
 
-`MEMORY:` Amount of memory to use in the server JVM (units can be used, for example 2048m). By default 8096m.
+`MEMORY:` Quantidade de memória a ser usada no servidor JVM (unidades podem ser usadas, por exemplo 2048m). Por padrão 8096m.
 
-`MODFOLDERS`: Mod folders to use to load the game mods. Allowed options are workshop, steam, and mods. Options must be separated by comma, for example: workshop,steam,mods
+`MODFOLDERS`: Pastas de mods a serem usadas para carregar os mods do jogo. As opções permitidas são workshop, steam e mods. As opções devem ser separadas por vírgula, por exemplo: workshop,steam,mods
 
-`NOSTEAM:` Starts the server in NoSteam mode, allowing to non steam users to connect.
+`NOSTEAM:` Inicia o servidor no modo NoSteam, permitindo que usuários não Steam se conectem.
 
-`PORT:` Set the server port. By default 16261
+`PORT:` Defina a porta do servidor. Por padrão 16261
 
-`SERVERNAME:` Set the server name, which allows you to have multiple server versions. Changing the name will create a new server data, so current progress will not be available. Also will not be lost, just reverting the server name change will load it again.
+`SERVERNAME:` Defina o nome do servidor, o que permite que você tenha várias versões do servidor. Alterar o nome criará um novo servidor de dados, portanto, o progresso atual não estará disponível. Também não será perdido, apenas revertendo a alteração do nome do servidor irá carregá-lo novamente.
 
-`SERVERPRESET:` Set the new servers default preset. If not set, the default is apocalypse. Allowed options are Apocalypse, Beginner, Builder, FirstWeek, SixMonthsLater, Survival and Survivor.
+`SERVERPRESET:` Defina a predefinição padrão dos novos servidores. Se não for definido, o padrão é apocalipse. As opções permitidas são Apocalypse, Beginner, Builder, FirstWeek, SixMonthsLater, Survival e Survivor.
 
-`SERVERPRESETREPLACE:` Replace the server preset by the one seted by the SERVERPRESET variable. By default false to avoid to replace custom configurations once the server has started.
+`SERVERPRESETREPLACE:` Substitua o preset do servidor pelo definido pela variável SERVERPRESET. Por padrão, false para evitar a substituição de configurações customizadas assim que o servidor for iniciado.
 
-`SOFTRESET:` Performs a soft reset in the server. More info in the Soft Reset section.
+`SOFTRESET:` Executa um soft reset no servidor. Mais informações na seção Soft Reset.
 
-`STEAMPORT1 & STEAMPORT2:` Sets the two additional ports required for steam to work. I guess that those ports are UDP, but it can be also TCP.
+`STEAMPORT1 & STEAMPORT2:` Define as duas portas adicionais necessárias para o vapor funcionar. Eu acho que essas portas são UDP, mas também podem ser TCP.
 
-`STEAMVAC:` Enables or disables de SteamVac protection in server
+`STEAMVAC:` Habilita ou desabilita a proteção SteamVac no servidor
 
-`WORKSHOP_IDS:` Semicolon separated list of Workshop IDs to install to the server
+`WORKSHOP_IDS:` Lista separada por ponto e vírgula de IDs de Oficina para instalar no servidor
 
-`MOD_IDS:` Semicolon separated list of Mod IDs to install to the server
+`MOD_IDS:` Lista separada por ponto e vírgula de Mod IDs para instalar no servidor
 
-Mods will install on second server start
-## Soft Reset
+Os mods serão instalados na inicialização do segundo servidor
+## Reinicialização Suave
 
-Soft reset will perform the following tasks:
+A reinicialização suave executará as seguintes tarefas:
 
-* Removes items from the ground.
-* Removes items from containers and replaces them with new loot. This includes player-made containers.
-* Removes corpses and zombified players.
-* Resets zombies.
-* Removes blood splatter.
-* Resets building alarms.
-* Resets the game clock. I’m not positive if this resets to day 1, but the original blog post implies that it does. So this would bring water and electricity back. Assuming your server settings have them * available at day 1.
-* Player-made buildings won’t be deleted.
-* Player inventories won’t reset.
+* Remove itens do chão.
+* Remove itens dos contêineres e os substitui por novos itens. Isso inclui contêineres feitos por jogadores.
+* Remove cadáveres e jogadores zumbificados.
+* Reseta os zumbis.
+* Remove respingos de sangue.
+* Redefine os alarmes do prédio.
+* Redefine o relógio do jogo. Não tenho certeza se isso é redefinido para o dia 1, mas a postagem original do blog sugere que sim. Então isso traria água e eletricidade de volta. Supondo que as configurações do servidor os tenham * disponíveis no dia 1.
+* Edifícios feitos por jogadores não serão excluídos.
+* Os inventários dos jogadores não serão zerados.
 
-Removing the following files in the Server data folder (ToDo: I have to search the equivalent files in modern version):
+Removendo os seguintes arquivos na pasta de dados do servidor (ToDo: tenho que pesquisar os arquivos equivalentes na versão moderna):
 
-* all zombie_X_Y.bin files
+* todos os arquivos zombie_X_Y.bin
 * map_t.bin
 * map_meta.bin
-* reanimated.bin
+* reanimado.bin
 
-Currently is not working correctly and will cause the server to crash when it is active. Also the above points are not performed so nothign will change in the server.
+Atualmente não está funcionando corretamente e fará com que o servidor trave quando estiver ativo. Além disso, os pontos acima não são executados, portanto, nada será alterado no servidor.
 
-## Required ports
+## Portas necessárias
 
-The required ports are docummented in the [Official wiki](https://pzwiki.net/wiki/Dedicated_Server#Forwarding_Required_Ports)
+As portas necessárias estão documentadas no [wiki oficial](https://pzwiki.net/wiki/Dedicated_Server#Forwarding_Required_Ports)
 
-For now the ports are the following, but it can change.
+Por enquanto as portas são as seguintes, mas pode mudar.
 
-### Steam clients ports
+### Portas dos clientes Steam
 
-This ports are used by the Steam clients to connect with the server, so it must be opened in firewall and configured in NAT.
-
-* 8766 UDP
-* 8767 UDP
-* 16261 UDP (configurable)
-
-### Non Steam clients ports
-
-This ports are used by the No Steam clients to connect with the server, so it must be opened in firewall and configured in NAT.
+Esta porta é utilizada pelos clientes Steam para se conectar com o servidor, portanto deve ser aberta no firewall e configurada no NAT.
 
 * 8766 UDP
 * 8767 UDP
-* 16261 UDP (configurable)
-* 16262 - 16272 TCP (range depends of the above port and the clients slots)
+* 16261 UDP (configurável)
 
-### Notes
+### Portas de clientes não Steam
 
-* The 16261 port can be changed using the PORT environment variable. This will affect at the TCP ports range, changing it to the next port. For example, if PORT is set to 12234, the TCP range will be 12234 - 12244.
-* The TCP ports range is used by the clients, so every client slot will need a port. If your server plans to host 50 clients, then you will need to open 50 ports in firewall/nat... (16262 - 16312).
-* The Wiki says that Non Steam ports is supposed to be for non steam clients, but I am using the steam client and those ports are used too.
+Esta porta é utilizada pelos clientes No Steam para se conectar com o servidor, portanto deve ser aberta no firewall e configurada no NAT.
 
-## How to use the image
+* 8766 UDP
+* 8767 UDP
+* 16261 UDP (configurável)
+* 16262 - 16272 TCP (a faixa depende da porta acima e dos slots dos clientes)
 
-To setup the server you can use the docker-compose program:
+### Notas
 
-* Copy the .env.template to .env and edit it with the settings you want. The only mandatory variable is ADMINPASSWORD and just the first time the server is executed (once is started at least once, it can be removed). The other variables are optional.
-* Run the `docker-compose up -d` command to start the server.
+* A porta 16261 pode ser alterada usando a variável de ambiente PORT. Isso afetará o intervalo de portas TCP, alterando-o para a próxima porta. Por exemplo, se PORT for definido como 12234, o intervalo TCP será 12234 - 12244.
+* O intervalo de portas TCP é usado pelos clientes, portanto, cada slot de cliente precisará de uma porta. Se o seu servidor planeja hospedar 50 clientes, você precisará abrir 50 portas no firewall/nat... (16262 - 16312).
+* O Wiki diz que as portas Non Steam devem ser para clientes não Steam, mas estou usando o cliente Steam e essas portas também são usadas.
 
-## Scripts folder
+## Como usar a imagem
+Para configurar o servidor, você pode usar o programa docker-compose:
 
-In the scripts folders there are three scripts:
+* Copie o .env.template para .env e edite-o com as configurações desejadas. A única variável obrigatória é ADMINPASSWORD e apenas na primeira vez que o servidor é executado (uma vez iniciado pelo menos uma vez, pode ser removido). As outras variáveis são opcionais.
+* Execute o comando `docker-compose up -d` para iniciar o servidor.
 
-* entry.sh: The script used in the image to start the server
-* update_forum.sh: Check the posts in the forum for updates and create a new image if a new version exists. This script was made because looks like the official page doesn't update the version as soon it is out.
-* uodate_web.sh: Check the version in the official page and create a new image if a new version exists
+## Pasta de scripts
+
+Nas pastas de scripts existem três scripts:
+
+* entry.sh: O script usado na imagem para iniciar o servidor
+* update_forum.sh: Verifique as postagens no fórum para atualizações e crie uma nova imagem se houver uma nova versão. Este script foi feito porque parece que a página oficial não atualiza a versão assim que sai.
+* uodate_web.sh: Verifique a versão na página oficial e crie uma nova imagem se existir uma nova versão
+
+danixu86/project-zomboid-dedicated-server
