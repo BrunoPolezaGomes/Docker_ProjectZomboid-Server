@@ -25,22 +25,39 @@ docker start monga_projectzomboid
 ## Variáveis ​​ambientais
 Dockerfile variáveis de ambiente:
 `ADMINPASSWORD:` Define ou altera a senha do administrador.
+
 `CACHEDIR:` Defina a pasta onde os dados serão armazenados.
+
 `DEBUG:` Ativa o modo de depuração no servidor
+
 `FORCEUPDATE:` Força uma atualização do servidor a cada inicialização.
+
 `IP:` Defina o IP da interface onde o servidor irá escutar. Por padrão, todas as interfaces.
+
 `MEMORY:` Quantidade de memória a ser usada no servidor JVM (unidades podem ser usadas, por exemplo 2048m). Por padrão 8096m.
+
 `MODFOLDERS` Pastas de mods a serem usadas para carregar os mods do jogo. As opções permitidas são workshop, steam e mods. As opções devem ser separadas por vírgula, por exemplo: workshop,steam,mods
+
 `NOSTEAM:` modo NoSteam
+
 `PORT:` Defina a porta do servidor. Padrão 16261
+
 `SERVERNAME:` Nome do servidor
+
 `SERVERPRESET:` Defina a predefinição padrão dos novos servidores. Se não for definido, o padrão é apocalipse. As opções permitidas são Apocalypse, Beginner, Builder, FirstWeek, SixMonthsLater, Survival e Survivor.
+
 `SERVERPRESETREPLACE:` Substitua o preset do servidor pelo definido pela variável SERVERPRESET. Por padrão, false para evitar a substituição de configurações customizadas assim que o servidor for iniciado.
+
 `SOFTRESET:` Executa um soft reset no servidor. Mais informações na seção Soft Reset.
+
 `STEAMPORT1 & STEAMPORT2:` Define as duas portas adicionais necessárias para o vapor funcionar. Eu acho que essas portas são UDP, mas também podem ser TCP.
+
 `STEAMVAC:` Habilita ou desabilita a proteção SteamVac no servidor
+
 `WORKSHOP_IDS:` Lista separada por ponto e vírgula de IDs de Oficina para instalar no servidor
+
 `MOD_IDS:` Lista separada por ponto e vírgula de Mod IDs para instalar no servidor
+
 
 ## Reinicialização Suave
 A reinicialização suave executará as seguintes tarefas:
