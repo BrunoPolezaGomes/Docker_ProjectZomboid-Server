@@ -1,4 +1,4 @@
-# Contêiner de servidor dedicado do Projeto Zomboid
+# Docker Servidor dedicado MONGA Projeto Zomboid
 
 Docker Servidor dedicado do Project Zombie usando o SteamCMD.
 https://hub.docker.com/r/lorthe/monga_projectzomboid
