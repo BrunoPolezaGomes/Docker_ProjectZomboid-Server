@@ -140,9 +140,18 @@ else
   MOD_IDS='2931602698,2931602698'
 fi
 
+# Configurando Parametros de informação do server
+ServerWelcomeMessage="______MONGAZOIDE______ <LINE> Seja bem vindo ao servidor!"
+PublicName="MONGA_PZServer"
+MaxPlayers="10"
+sed -i "s/ServerWelcomeMessage=.*/ServerWelcomeMessage=${ServerWelcomeMessage}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+sed -i "s/PublicName=.*/PublicName=${PublicName}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+sed -i "s/MaxPlayers=.*/MaxPlayers=${MaxPlayers}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+
 if [ -n "${WORKSHOP_IDS}" ]; then
  	echo "*** INFORMAÇÕES: IDs de oficinas encontradas, incluindo ${WORKSHOP_IDS} ***"
 	sed -i "s/WorkshopItems=.*/WorkshopItems=${WORKSHOP_IDS}/" "${HOMEDIR}/Zomboid/Server/${SERVERNAME}.ini"
+
 else
   # Se WORKSHOP_IDS não estiver definido, use o nome padrão
   WORKSHOP_IDS="2875848298,2849247394,2923439994,2859296947,2859296947,2859296947"

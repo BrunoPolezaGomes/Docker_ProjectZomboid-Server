@@ -13,7 +13,7 @@ docker rm -f monga_projectzomboid
 # Criar container com as variaveis
 docker run -d -t -i -e SERVERNAME='MONGA_PZServer' -p 16261:16265 \
 -e ADMINPASSWORD='Password@123' \
--e PORT='16261:16265'  \
+-e PORT='16261'  \
 -e FORCEUPDATE='' \
 -e MOD_IDS='2931602698,2931602698' \
 -e WORKSHOP_IDS='2875848298,2849247394,2923439994,2859296947,2859296947,2859296947' \

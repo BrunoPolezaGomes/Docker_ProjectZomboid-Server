@@ -37,7 +37,7 @@ RUN set -x \
 RUN mkdir -p /home/Zomboid/Saves/Multiplayer/ && cd /home/Zomboid/Saves/Multiplayer/  \
 && wget https://github.com/MongaGit/MONGA_PZServer/archive/refs/heads/main.zip \
 && unzip -o /home/Zomboid/Saves/Multiplayer/main.zip \
-&& rm -r /home/Zomboid/Saves/Multiplayer/MONGA_PZServer \
+#&& rm -r /home/Zomboid/Saves/Multiplayer/MONGA_PZServer \
 && mv /home/Zomboid/Saves/Multiplayer/MONGA_PZServer-main /home/Zomboid/Saves/Multiplayer/MONGA_PZServer 
 
 # Abrindo portas necessarias
